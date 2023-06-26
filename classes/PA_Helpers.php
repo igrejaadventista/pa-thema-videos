@@ -27,7 +27,9 @@ function videoLength(int $post_id = 0): string
  */
 function getPrioritySeat($post_id): string
 {
-  if ($term = get_the_terms($post_id, 'xtt-pa-owner'))
+  $term = get_the_terms($post_id, 'xtt-pa-owner');
+
+  if(!empty($term) && !is_wp_error($term))
     return $term[0]->name;
 
   return __('There is no headquarter office linked to this post.', 'iasd');
@@ -41,7 +43,9 @@ function getPrioritySeat($post_id): string
  */
 function getDepartment($post_id)
 {
-  if ($term = get_the_terms($post_id, 'xtt-pa-departamentos'))
+  $term = get_the_terms($post_id, 'xtt-pa-departamentos');
+
+  if(!empty($term) && !is_wp_error($term))
     return $term[0];
 
   return null;
@@ -118,10 +122,10 @@ function linkToShare($post_id, $social): void
 
 function getHeaderTitle($post_id = NULL)
 {
-  if (is_tax()) //is archive
+  if (is_tax() && !empty(get_queried_object())) //is archive
     $title = get_taxonomy(get_queried_object()->taxonomy)->label . ' | ' . get_queried_object()->name;
-  elseif (is_single()) //is single
-    $title = get_taxonomy('xtt-pa-departamentos')->label . ' | ' . getDepartment($post_id)->name;
+  elseif (is_single() && !empty($taxonomy = get_taxonomy('xtt-pa-departamentos'))) //is single
+    $title = $taxonomy->label . ' | ' . getDepartment($post_id)->name;
   else
     $title = get_the_title(); //default
 

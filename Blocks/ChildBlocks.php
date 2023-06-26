@@ -5,6 +5,7 @@ namespace Blocks;
 use Blocks\PACarouselVideos\PACarouselVideos;
 use Blocks\PAFeaturePost\PAFeaturePost;
 use Blocks\PAListVideosColumn\PAListVideosColumn;
+use Blocks\PARow\PARow;
 
 class ChildBlocks
 {
@@ -23,7 +24,8 @@ class ChildBlocks
         $newBlocks = [
             PAFeaturePost::class,
             PAListVideosColumn::class,
-            PACarouselVideos::class
+            PACarouselVideos::class,
+            PARow::class
         ];
 
         return array_merge($blocks, $newBlocks);
